@@ -28,7 +28,7 @@ function App() {
 
   const CentralIconProps = {
     className: `${baseClass}`,
-    size: 56,
+    size: 64,
   };
 
   const CentralIcon =
@@ -40,22 +40,25 @@ function App() {
       <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
     );
 
+  const isNotIdle = status === "recording" || status === "paused";
+  status === "recording" || status === "paused";
+
   return (
-    <main className="grid min-h-screen place-items-center  bg-slate-800">
+    <main className="grid min-h-screen place-items-center font-raleway  bg-slate-800">
       <div>
-        <p className="text-center text-white font-raleway font-semibold tracking-wider text-2xl">
+        <p className="text-center text-white  font-semibold tracking-wider text-2xl">
           {status}
         </p>
-        <div className="flex gap-4 mt-4 justify-center z-40">
+        <div className="flex gap-8 mt-4 justify-center items-center">
           <TiDelete
-            className={`${baseClass} hidden`}
-            size={32}
+            className={`${baseClass} ${isNotIdle ? "block" : "hidden"}`}
+            size={68}
             onClick={clearBlobUrl}
           />
           {CentralIcon}
           <BsStopCircleFill
-            className={`${baseClass} hidden`}
-            size={32}
+            className={`${baseClass} ${isNotIdle ? "block ml-3" : "hidden"}`}
+            size={48}
             onClick={stopRecording}
           />
         </div>
