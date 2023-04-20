@@ -62,9 +62,10 @@ function App() {
   return (
     <main className="grid min-h-screen place-items-center  bg-slate-800">
       <div>
-        <p className="text-center text-white">{status}</p>
+        <p className="text-center text-white font-raleway font-semibold tracking-wider text-2xl">
+          {status}
+        </p>
         <div className="flex gap-4 mt-4 justify-center z-40">
-          {/* TODO: Pause / Resume buttons */}
           <AiFillPlayCircle
             className={`${baseClass}`}
             size={32}
