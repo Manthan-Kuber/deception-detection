@@ -26,39 +26,6 @@ function App() {
   const baseClass =
     "text-rose-500 hover:cursor-pointer hover:scale-110 transition-all ease-in-out hover:opacity-90 ";
 
-  const IconsList = [
-    {
-      Icon: AiFillPlayCircle,
-      size: 32,
-      className: `${baseClass}`,
-      onClick: resumeRecording,
-    },
-    {
-      Icon: TiDelete,
-      size: 32,
-      className: `${baseClass}`,
-      onClick: clearBlobUrl,
-    },
-    {
-      Icon: RiRecordCircleFill,
-      size: 32,
-      className: `${baseClass}`,
-      onClick: startRecording,
-    },
-    {
-      Icon: BsPauseCircle,
-      size: 32,
-      className: `${baseClass}`,
-      onClick: pauseRecording,
-    },
-    {
-      Icon: BsStopCircleFill,
-      size: 32,
-      className: `${baseClass}`,
-      onClick: stopRecording,
-    },
-  ].map(({ Icon, ...props }) => <Icon {...props} />);
-
   return (
     <main className="grid min-h-screen place-items-center  bg-slate-800">
       <div>
