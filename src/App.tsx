@@ -26,6 +26,20 @@ function App() {
   const baseClass =
     "text-rose-500 hover:cursor-pointer hover:scale-110 transition-all ease-in-out hover:opacity-90 ";
 
+  const CentralIconProps = {
+    className: `${baseClass}`,
+    size: 56,
+  };
+
+  const CentralIcon =
+    status === "idle" || status === "acquiring_media" ? (
+      <RiRecordCircleFill {...CentralIconProps} onClick={startRecording} />
+    ) : status === "recording" ? (
+      <BsPauseCircle {...CentralIconProps} onClick={pauseRecording} />
+    ) : (
+      <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
+    );
+
   return (
     <main className="grid min-h-screen place-items-center  bg-slate-800">
       <div>
@@ -33,28 +47,14 @@ function App() {
           {status}
         </p>
         <div className="flex gap-4 mt-4 justify-center z-40">
-          <AiFillPlayCircle
-            className={`${baseClass}`}
-            size={32}
-            onClick={resumeRecording}
-          />
           <TiDelete
-            className={`${baseClass}`}
+            className={`${baseClass} hidden`}
             size={32}
             onClick={clearBlobUrl}
           />
-          <RiRecordCircleFill
-            className={`${baseClass}`}
-            size={48}
-            onClick={startRecording}
-          />{" "}
-          <BsPauseCircle
-            className={`${baseClass}`}
-            size={32}
-            onClick={pauseRecording}
-          />
+          {CentralIcon}
           <BsStopCircleFill
-            className={`${baseClass}`}
+            className={`${baseClass} hidden`}
             size={32}
             onClick={stopRecording}
           />
