@@ -57,7 +57,7 @@ function App() {
           />
           {CentralIcon}
           <BsStopCircleFill
-            className={`${baseClass} ${isNotIdle ? "block ml-3" : "hidden"}`}
+            className={`${baseClass} ml-3 ${isNotIdle ? "block " : "hidden"}`}
             size={48}
             onClick={stopRecording}
           />
