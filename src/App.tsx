@@ -3,6 +3,7 @@ import { RiRecordCircleFill } from "react-icons/ri";
 import { BsPauseCircle, BsStopCircleFill } from "react-icons/bs";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
+import { useState } from "react";
 
 function App() {
   const {
@@ -14,13 +15,29 @@ function App() {
     clearBlobUrl,
     mediaBlobUrl,
   } = useReactMediaRecorder({ audio: true });
+  const [isLoading, setIsLoading] = useState(false);
+  const [prediction, setPrediction] = useState("");
 
   const sendAudio = async () => {
     const audioBlob = await fetch(mediaBlobUrl!).then((r) => r.blob()); //Extract blob
     const audioFile = new File([audioBlob], "voice.wav", { type: "audio/wav" }); //Convert to audio
     const formData = new FormData();
-    formData.append("file", audioFile); // append file to formData
-    //TODO: Make api call here
+    formData.append("sound", audioFile); // append file to formData
+    const serverUrl = import.meta.env.VITE_SERVER_URL;
+    const options = {
+      method: "post",
+      body: formData,
+    };
+    try {
+      setIsLoading(true);
+      const res = await fetch(serverUrl, options);
+      const { prediction }: { prediction: number } = await res.json();
+      console.log(prediction);
+      setPrediction(prediction.toString());
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const baseClass =
@@ -66,12 +83,26 @@ function App() {
           {status === "stopped" && mediaBlobUrl && (
             <>
               <audio src={mediaBlobUrl} controls />
-              <form>
-                <button onClick={sendAudio}>Submit</button>
+              <form className="flex">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    sendAudio();
+                  }}
+                  type="submit"
+                  className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 "
+                >
+                  Submit
+                </button>
               </form>
             </>
           )}
         </div>
+        <span className="text-white font-mono mt-4 block text-center font-semibold">
+          {isLoading
+            ? "Loading prediction..."
+            : prediction && `Prediction is: ${prediction}`}
+        </span>
       </div>
     </main>
   );
