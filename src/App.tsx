@@ -6,6 +6,7 @@ import { TiDelete } from "react-icons/ti";
 import { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import backgroundSvg from "./assets/background.svg";
 
 function App() {
   const {
@@ -63,9 +64,11 @@ function App() {
   status === "recording" || status === "paused";
 
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway ">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway bg-no-repeat bg-cover"  style={{ backgroundImage: `url(${backgroundSvg})` }}>
       <Header />
-      <main className="flex items-center justify-center">
+      <main
+        className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10"
+      >
         <div>
           <p className="text-center text-white  font-semibold tracking-wider text-2xl">
             {status[0].toUpperCase() + status.slice(1)}
