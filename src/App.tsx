@@ -7,6 +7,7 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import backgroundSvg from "./assets/background.svg";
+import IconWrapper from "./components/IconWrapper";
 
 function App() {
   const {
@@ -53,13 +54,21 @@ function App() {
 
   const CentralIcon =
     status === "idle" || status === "acquiring_media" ? (
-      <RiRecordCircleFill {...CentralIconProps} onClick={startRecording} />
+      <IconWrapper label="Record">
+        <RiRecordCircleFill {...CentralIconProps} onClick={startRecording} />
+      </IconWrapper>
     ) : status === "recording" ? (
-      <BsPauseCircle {...CentralIconProps} onClick={pauseRecording} />
+      <IconWrapper label="Pause">
+        <BsPauseCircle {...CentralIconProps} onClick={pauseRecording} />
+      </IconWrapper>
     ) : status === "stopped" ? (
-      <RiRestartFill {...CentralIconProps} onClick={clearBlobUrl} />
+      <IconWrapper label="Reset">
+        <RiRestartFill {...CentralIconProps} onClick={clearBlobUrl} />
+      </IconWrapper>
     ) : (
-      <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
+      <IconWrapper label="Play">
+        <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
+      </IconWrapper>
     );
 
   const isNotIdle = status === "recording" || status === "paused";
@@ -77,17 +86,25 @@ function App() {
             {status[0].toUpperCase() + status.slice(1)}
           </p>
           <div className="flex gap-8 mt-4 justify-center items-center">
-            <TiDelete
-              className={`${baseClass} ${isNotIdle ? "block" : "hidden"}`}
-              size={68}
-              onClick={clearBlobUrl}
-            />
+            <div className={`${isNotIdle ? "block" : "hidden"}`}>
+              <IconWrapper label="Delete">
+                <TiDelete
+                  className={`${baseClass}`}
+                  size={68}
+                  onClick={clearBlobUrl}
+                />
+              </IconWrapper>
+            </div>
             {CentralIcon}
-            <BsStopCircleFill
-              className={`${baseClass} ml-3 ${isNotIdle ? "block " : "hidden"}`}
-              size={48}
-              onClick={stopRecording}
-            />
+            <div className={`${isNotIdle ? "block" : "hidden"}`}>
+              <IconWrapper label="Stop">
+                <BsStopCircleFill
+                  className={`${baseClass}`}
+                  size={48}
+                  onClick={stopRecording}
+                />
+              </IconWrapper>
+            </div>
           </div>
           <div className="mt-4">
             {status === "stopped" && mediaBlobUrl && (
