@@ -51,7 +51,6 @@ function App() {
     size: 64,
   };
 
-
   const CentralIcon =
     status === "idle" || status === "acquiring_media" ? (
       <RiRecordCircleFill {...CentralIconProps} onClick={startRecording} />
@@ -93,7 +92,7 @@ function App() {
           <div className="mt-4">
             {status === "stopped" && mediaBlobUrl && (
               <>
-                <audio src={mediaBlobUrl} controls />
+                <audio src={mediaBlobUrl} controls className="rounded-md" />
                 <form className="flex">
                   <button
                     onClick={(e) => {
