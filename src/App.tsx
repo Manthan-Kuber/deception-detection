@@ -1,5 +1,5 @@
 import { useReactMediaRecorder } from "react-media-recorder";
-import { RiRecordCircleFill } from "react-icons/ri";
+import { RiRecordCircleFill, RiRestartFill } from "react-icons/ri";
 import { BsPauseCircle, BsStopCircleFill } from "react-icons/bs";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
@@ -36,7 +36,7 @@ function App() {
       const res = await fetch(serverUrl, options);
       const { prediction }: { prediction: number } = await res.json();
       console.log(prediction);
-      setPrediction(prediction.toString());
+      setPrediction(prediction.toFixed(3).toString());
       setIsLoading(false);
     } catch (e) {
       console.log(e);
@@ -51,11 +51,14 @@ function App() {
     size: 64,
   };
 
+
   const CentralIcon =
     status === "idle" || status === "acquiring_media" ? (
       <RiRecordCircleFill {...CentralIconProps} onClick={startRecording} />
     ) : status === "recording" ? (
       <BsPauseCircle {...CentralIconProps} onClick={pauseRecording} />
+    ) : status === "stopped" ? (
+      <RiRestartFill {...CentralIconProps} onClick={clearBlobUrl} />
     ) : (
       <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
     );
@@ -64,11 +67,12 @@ function App() {
   status === "recording" || status === "paused";
 
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway bg-no-repeat bg-cover"  style={{ backgroundImage: `url(${backgroundSvg})` }}>
+    <div
+      className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway bg-no-repeat bg-cover"
+      style={{ backgroundImage: `url(${backgroundSvg})` }}
+    >
       <Header />
-      <main
-        className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10"
-      >
+      <main className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10">
         <div>
           <p className="text-center text-white  font-semibold tracking-wider text-2xl">
             {status[0].toUpperCase() + status.slice(1)}
