@@ -4,6 +4,8 @@ import { BsPauseCircle, BsStopCircleFill } from "react-icons/bs";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 import { useState } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const {
@@ -61,50 +63,54 @@ function App() {
   status === "recording" || status === "paused";
 
   return (
-    <main className="grid min-h-screen place-items-center font-raleway  bg-slate-800">
-      <div>
-        <p className="text-center text-white  font-semibold tracking-wider text-2xl">
-          {status}
-        </p>
-        <div className="flex gap-8 mt-4 justify-center items-center">
-          <TiDelete
-            className={`${baseClass} ${isNotIdle ? "block" : "hidden"}`}
-            size={68}
-            onClick={clearBlobUrl}
-          />
-          {CentralIcon}
-          <BsStopCircleFill
-            className={`${baseClass} ml-3 ${isNotIdle ? "block " : "hidden"}`}
-            size={48}
-            onClick={stopRecording}
-          />
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway ">
+      <Header />
+      <main className="flex items-center justify-center">
+        <div>
+          <p className="text-center text-white  font-semibold tracking-wider text-2xl">
+            {status[0].toUpperCase() + status.slice(1)}
+          </p>
+          <div className="flex gap-8 mt-4 justify-center items-center">
+            <TiDelete
+              className={`${baseClass} ${isNotIdle ? "block" : "hidden"}`}
+              size={68}
+              onClick={clearBlobUrl}
+            />
+            {CentralIcon}
+            <BsStopCircleFill
+              className={`${baseClass} ml-3 ${isNotIdle ? "block " : "hidden"}`}
+              size={48}
+              onClick={stopRecording}
+            />
+          </div>
+          <div className="mt-4">
+            {status === "stopped" && mediaBlobUrl && (
+              <>
+                <audio src={mediaBlobUrl} controls />
+                <form className="flex">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendAudio();
+                    }}
+                    type="submit"
+                    className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 "
+                  >
+                    Submit
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+          <span className="text-white font-mono mt-4 block text-center font-semibold">
+            {isLoading
+              ? "Loading prediction..."
+              : prediction && `Prediction is: ${prediction}`}
+          </span>
         </div>
-        <div className="mt-4">
-          {status === "stopped" && mediaBlobUrl && (
-            <>
-              <audio src={mediaBlobUrl} controls />
-              <form className="flex">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    sendAudio();
-                  }}
-                  type="submit"
-                  className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 "
-                >
-                  Submit
-                </button>
-              </form>
-            </>
-          )}
-        </div>
-        <span className="text-white font-mono mt-4 block text-center font-semibold">
-          {isLoading
-            ? "Loading prediction..."
-            : prediction && `Prediction is: ${prediction}`}
-        </span>
-      </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
