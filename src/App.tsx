@@ -23,6 +23,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [prediction, setPrediction] = useState("");
 
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  const resetRecording = () => {
+    controller.abort(); //Abort the initiated fetch request
+    clearBlobUrl();
+    setIsLoading(false);
+  };
+
   const sendAudio = async () => {
     const audioBlob = await fetch(mediaBlobUrl!).then((r) => r.blob()); //Extract blob
     const audioFile = new File([audioBlob], "voice.wav", { type: "audio/wav" }); //Convert to audio
@@ -30,6 +39,7 @@ function App() {
     formData.append("sound", audioFile); // append file to formData
     const serverUrl = import.meta.env.VITE_SERVER_URL;
     const options = {
+      signal, //Pass the signal to fetch promise
       method: "post",
       body: formData,
     };
@@ -64,7 +74,7 @@ function App() {
       </IconWrapper>
     ) : status === "stopped" ? (
       <IconWrapper label="Reset">
-        <RiRestartFill {...CentralIconProps} onClick={clearBlobUrl} />
+        <RiRestartFill {...CentralIconProps} onClick={resetRecording} />
       </IconWrapper>
     ) : (
       <IconWrapper label="Play">
@@ -92,7 +102,7 @@ function App() {
                 <TiDelete
                   className={`${baseClass}`}
                   size={68}
-                  onClick={clearBlobUrl}
+                  onClick={resetRecording}
                 />
               </IconWrapper>
             </div>
@@ -118,7 +128,8 @@ function App() {
                       sendAudio();
                     }}
                     type="submit"
-                    className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 "
+                    className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 disabled:border-gray-500 disabled:text-gray-500 disabled:hover:bg-transparent disabled:hover:border-gray-500 "
+                    disabled={isLoading}
                   >
                     Submit
                   </button>
@@ -128,7 +139,7 @@ function App() {
           </div>
           <span className="text-white font-mono mt-4 block text-center font-semibold">
             {isLoading ? (
-              <div className="flex items-center">
+              <div className="flex items-center justify-center">
                 <ColorRing
                   visible={true}
                   height="36"
