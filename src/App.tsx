@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import backgroundSvg from "./assets/background.svg";
 import IconWrapper from "./components/IconWrapper";
+import { ColorRing } from "react-loader-spinner";
 
 function App() {
   const {
@@ -126,9 +127,27 @@ function App() {
             )}
           </div>
           <span className="text-white font-mono mt-4 block text-center font-semibold">
-            {isLoading
-              ? "Loading prediction..."
-              : prediction && `Prediction is: ${prediction}`}
+            {isLoading ? (
+              <div className="flex items-center">
+                <ColorRing
+                  visible={true}
+                  height="36"
+                  width="36"
+                  ariaLabel="blocks-loading"
+                  wrapperClass="blocks-wrapper"
+                  colors={[
+                    "#67e8f9",
+                    "#67e8f9",
+                    "#f43f5e",
+                    "#f43f5e",
+                    "#f43f5e",
+                  ]}
+                />
+                <span>Loading prediction...</span>
+              </div>
+            ) : (
+              prediction && `Prediction is: ${prediction}`
+            )}
           </span>
         </div>
       </main>
