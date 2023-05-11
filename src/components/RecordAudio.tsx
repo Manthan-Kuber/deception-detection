@@ -71,7 +71,7 @@ const RecordAudio = ({
         <RiRestartFill {...CentralIconProps} onClick={resetRecording} />
       </IconWrapper>
     ) : (
-      <IconWrapper label="Play">
+      <IconWrapper label="Resume">
         <AiFillPlayCircle {...CentralIconProps} onClick={resumeRecording} />
       </IconWrapper>
     );

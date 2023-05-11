@@ -4,13 +4,13 @@ import Footer from "./components/Footer";
 import backgroundSvg from "./assets/background.svg";
 import RecordAudio from "./components/RecordAudio";
 
+const serverUrl = import.meta.env.VITE_SERVER_URL;
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [prediction, setPrediction] = useState("");
 
   const controller = new AbortController();
-
-  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   //Use the same to upload audio 
   const sendAudio = async <T extends RequestInit>(options: T) => {
