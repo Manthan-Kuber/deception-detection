@@ -32,19 +32,11 @@ function App() {
     setIsLoading(false);
   };
 
-  const sendAudio = async () => {
-    const audioBlob = await fetch(mediaBlobUrl!).then((r) => r.blob()); //Extract blob
-    const audioFile = new File([audioBlob], "voice.wav", { type: "audio/wav" }); //Convert to audio
-    const formData = new FormData();
-    formData.append("sound", audioFile); // append file to formData
-    const serverUrl = import.meta.env.VITE_SERVER_URL;
-    const options = {
-      signal, //Pass the signal to fetch promise
-      method: "post",
-      body: formData,
-    };
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
+  const sendAudio = async <T extends RequestInit>(options: T) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const res = await fetch(serverUrl, options);
       const { prediction }: { prediction: number } = await res.json();
       console.log(prediction);
@@ -52,7 +44,21 @@ function App() {
       setIsLoading(false);
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
+  };
+
+  const handleSubmit = async () => {
+    const audioBlob = await fetch(mediaBlobUrl!).then((r) => r.blob()); //Extract blob
+    const audioFile = new File([audioBlob], "voice.wav", { type: "audio/wav" }); //Convert to audio
+    const formData = new FormData();
+    formData.append("sound", audioFile); // append file to formData
+    const options = {
+      signal, //Pass the signal to fetch promise
+      method: "post",
+      body: formData,
+    };
+    sendAudio(options);
   };
 
   const baseClass =
@@ -125,7 +131,7 @@ function App() {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      sendAudio();
+                      handleSubmit();
                     }}
                     type="submit"
                     className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 disabled:border-gray-500 disabled:text-gray-500 disabled:hover:bg-transparent disabled:hover:border-gray-500 "
