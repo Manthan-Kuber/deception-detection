@@ -49,8 +49,7 @@ function App() {
     >
       <Header />
       <main className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10">
-        {/* TODO: Create Tabs around wrapper div below*/}
-        <div className="p-1 border border-neutral-600 h-72 w-72 bg-neutral-900 rounded-md">
+        <div className="p-1 border border-neutral-600 min-h-[20rem] min-w-[23rem]  bg-neutral-900 rounded-md">
           <ul className="text-white flex items-center">
             {Tabs.map((tab) => (
               <li
@@ -80,11 +79,11 @@ function App() {
               transition={{ duration: 0.2 }}
             >
               {selectedTab.label === "Record" ? (
-                <div>
+                <div className="flex flex-col items-center" >
                   <RecordAudio {...RecordAudioProps} />
                 </div>
               ) : (
-                <div className="text-white">
+                <div className="text-white grid place-items-center">
                   <p>Meow</p>
                 </div>
               )}
