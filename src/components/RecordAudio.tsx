@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
 import { RiRecordCircleFill, RiRestartFill } from "react-icons/ri";
 import { BsPauseCircle, BsStopCircleFill } from "react-icons/bs";
@@ -15,21 +16,7 @@ const CentralIconProps = {
   size: 64,
 };
 
-interface Props {
-  sendAudio: <T extends RequestInit>(options: T) => Promise<void>;
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  controller: AbortController;
-  prediction: string;
-}
-
-const RecordAudio = ({
-  sendAudio,
-  isLoading,
-  controller,
-  setIsLoading,
-  prediction,
-}: Props) => {
+const RecordAudio = ({ sendAudio, controller, prediction }: AudioProps) => {
   const {
     status,
     startRecording,
@@ -39,6 +26,8 @@ const RecordAudio = ({
     clearBlobUrl,
     mediaBlobUrl,
   } = useReactMediaRecorder({ audio: true });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetRecording = () => {
     controller.abort(); //Abort the initiated fetch request
@@ -57,7 +46,7 @@ const RecordAudio = ({
       method: "post",
       body: formData,
     };
-    sendAudio(options);
+    sendAudio(options, setIsLoading);
   };
 
   const CentralIcon =
