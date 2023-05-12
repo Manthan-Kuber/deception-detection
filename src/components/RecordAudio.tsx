@@ -5,6 +5,7 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 import { ColorRing } from "react-loader-spinner";
 import IconWrapper from "./IconWrapper";
+import Button from "./Button";
 
 const baseClass =
   "text-rose-500 hover:cursor-pointer hover:scale-110 transition-all ease-in-out hover:opacity-90 ";
@@ -38,11 +39,13 @@ const RecordAudio = ({
     clearBlobUrl,
     mediaBlobUrl,
   } = useReactMediaRecorder({ audio: true });
+
   const resetRecording = () => {
     controller.abort(); //Abort the initiated fetch request
     clearBlobUrl();
     setIsLoading(false);
   };
+
   const handleSubmit = async () => {
     const audioBlob = await fetch(mediaBlobUrl!).then((r) => r.blob()); //Extract blob
     const audioFile = new File([audioBlob], "voice.wav", { type: "audio/wav" }); //Convert to audio
@@ -109,17 +112,15 @@ const RecordAudio = ({
           <>
             <audio src={mediaBlobUrl} controls className="rounded-md" />
             <form className="flex">
-              <button
+              <Button
                 onClick={(e) => {
                   e.preventDefault();
                   handleSubmit();
                 }}
-                type="submit"
-                className="text-white text-center font-semibold mx-auto border-rose-500 border mt-4 py-2 px-4 rounded-lg transition-colors hover:border-transparent hover:bg-rose-500 disabled:border-gray-500 disabled:text-gray-500 disabled:hover:bg-transparent disabled:hover:border-gray-500 "
                 disabled={isLoading}
               >
-                Submit
-              </button>
+                Submit{" "}
+              </Button>
             </form>
           </>
         )}
