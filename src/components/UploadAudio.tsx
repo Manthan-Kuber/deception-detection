@@ -44,15 +44,16 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
           onChange={(e) => handleChange(e)}
         />
         <section className="flex flex-col items-center">
-          <div
+          <button
             onClick={() => {
               inputFileRef.current?.click();
             }}
+            type="button"
             className=" flex items-center gap-1 w-fit hover:cursor-pointer p-2 rounded-md bg-rose-500"
           >
             <span>Browse Audio</span>
             <MdAudiotrack size={16} />
-          </div>
+          </button>
           <div className="flex items-center mt-4 gap-4">
             <label htmlFor="audioInput">{fileName}</label>
             <button
@@ -63,6 +64,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
                 setIsFileSelected(false);
                 setFileName(initialFileName);
               }}
+              type="button"
             >
               <BsFillTrashFill size={16} />
             </button>
