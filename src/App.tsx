@@ -36,6 +36,11 @@ function App() {
     }
   };
 
+  const handleTabChange = (tab:typeof Tabs[0]) => {
+      setSelectedTab(tab);
+      if(selectedTab !== tab) controller.abort()
+  }
+
   const AudioProps = {
     sendAudio,
     controller,
@@ -54,9 +59,7 @@ function App() {
             {Tabs.map((tab) => (
               <li
                 key={tab.id}
-                onClick={() => {
-                  setSelectedTab(tab);
-                }}
+                onClick={() => handleTabChange(tab)}
                 className="relative hover:cursor-pointer hover:bg-neutral-800 p-2 rounded-tl-md rounded-tr-md flex-1"
               >
                 {tab.label}
