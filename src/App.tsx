@@ -75,7 +75,7 @@ function App() {
     >
       <Header />
       <main className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 px-4">
-        <div className="p-1 border border-neutral-600 w-full min-h-[25rem] max-w-[23rem] bg-neutral-900 rounded-md">
+        <div className="p-1 grid grid-rows-[auto_1fr] border border-neutral-600 w-full min-h-[25rem] max-w-[23rem] bg-neutral-900 rounded-md">
           <ul className="text-white flex items-center">
             {Tabs.map((tab) => (
               <li
@@ -95,10 +95,10 @@ function App() {
               </li>
             ))}
           </ul>
+          <div className="grid place-items-center" >
           <AnimatePresence mode="wait">
             {/* TODO: Center tabcontent */}
             <motion.div
-              className="my-auto py-10 px-4"
               key={selectedTab ? selectedTab.label : "empty"}
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -153,6 +153,7 @@ function App() {
               )}
             </motion.div>
           </AnimatePresence>
+          </div>
         </div>
       </main>
     </div>
