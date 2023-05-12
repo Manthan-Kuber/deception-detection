@@ -8,10 +8,7 @@ import toast from "react-hot-toast";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-const Tabs = [
-  { id: 0, label: "Record" },
-  { id: 1, label: "Upload" },
-];
+const Tabs = [{ label: "Record" }, { label: "Upload" }];
 
 function App() {
   const [prediction, setPrediction] = useState("");
@@ -64,7 +61,7 @@ function App() {
           <ul className="text-white flex items-center">
             {Tabs.map((tab) => (
               <li
-                key={tab.id}
+                key={tab.label}
                 onClick={() => handleTabChange(tab)}
                 className="relative hover:cursor-pointer hover:bg-neutral-800 p-2 rounded-tl-md rounded-tr-md flex-1"
               >
@@ -79,22 +76,23 @@ function App() {
             ))}
           </ul>
           <div className="grid place-items-center p-4">
-            <AnimatePresence mode="wait">
-              {/* TODO: Center tabcontent */}
-              <motion.div
-                key={selectedTab ? selectedTab.label : "empty"}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {selectedTab.label === "Record" ? (
+            <motion.div
+              key={selectedTab ? selectedTab.label : "empty"}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {selectedTab.label === "Record" ? (
+                <AnimatePresence mode="wait">
                   <RecordAudio {...AudioProps} />
-                ) : (
+                </AnimatePresence>
+              ) : (
+                <AnimatePresence mode="wait">
                   <UploadAudio {...AudioProps} />
-                )}
-              </motion.div>
-            </AnimatePresence>
+                </AnimatePresence>
+              )}
+            </motion.div>
           </div>
         </div>
       </main>

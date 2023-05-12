@@ -4,11 +4,12 @@ import { BsFillTrashFill } from "react-icons/bs";
 import Button from "./Button";
 import ShowPrediction from "./ShowPrediction";
 
+const initialFileName = "No file Selected...";
+
 const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const initialFileName = "No file Selected...";
   const [fileName, setFileName] = useState(initialFileName);
   const [isLoading, setIsLoading] = useState(false);
 
