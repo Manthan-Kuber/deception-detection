@@ -63,20 +63,33 @@ function App() {
                 {tab.label}
                 {tab === selectedTab && (
                   <motion.div
-                    className="absolute bg-gradient-to-r inset-x-0 h-1 bottom-0 from-rose-500 to-cyan-300"
+                    className="absolute bg-gradient-to-r inset-x-0 h-0.5 bottom-0 from-rose-500 to-cyan-300"
                     layoutId="underline"
                   />
                 )}
               </li>
             ))}
           </ul>
-          <div className="my-auto py-10 px-4" >
-            {selectedTab.label === "Record" ? (
-                <RecordAudio {...RecordAudioProps} />
-            ) : (
-              <div className="text-white" >Upload</div>
-            )}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              className="my-auto py-10 px-4"
+              key={selectedTab ? selectedTab.label : "empty"}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {selectedTab.label === "Record" ? (
+                <div>
+                  <RecordAudio {...RecordAudioProps} />
+                </div>
+              ) : (
+                <div className="text-white">
+                  <p>Meow</p>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
       <Footer />
