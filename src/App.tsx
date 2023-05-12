@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import backgroundSvg from "./assets/background.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import RecordAudio from "./components/RecordAudio";
 import Button from "./components/Button";
+import { MdAudiotrack } from "react-icons/md";
+import { BsFillTrashFill } from "react-icons/bs";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -19,6 +20,9 @@ function App() {
   const [selectedTab, setSelectedTab] = useState(Tabs[0]);
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const initialFileName = "No file Selected...";
+  const [fileName, setFileName] = useState(initialFileName);
 
   const controller = new AbortController();
 
@@ -47,6 +51,7 @@ function App() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files![0]);
+    setFileName(e.target.files![0].name);
     setIsFileSelected(true);
   };
 
@@ -70,7 +75,7 @@ function App() {
     >
       <Header />
       <main className="flex items-center justify-center w-full bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 px-4">
-        <div className="p-1 border border-neutral-600 w-full min-h-[20rem] max-w-[23rem] max-h-[20rem]   bg-neutral-900 rounded-md">
+        <div className="p-1 border border-neutral-600 w-full min-h-[25rem] max-w-[23rem] bg-neutral-900 rounded-md">
           <ul className="text-white flex items-center">
             {Tabs.map((tab) => (
               <li
@@ -91,6 +96,7 @@ function App() {
             ))}
           </ul>
           <AnimatePresence mode="wait">
+            {/* TODO: Center tabcontent */}
             <motion.div
               className="my-auto py-10 px-4"
               key={selectedTab ? selectedTab.label : "empty"}
@@ -109,8 +115,36 @@ function App() {
                     type="file"
                     accept="audio/*"
                     name="sound"
+                    ref={inputFileRef}
+                    id="audioInput"
+                    hidden
+                    disabled={isLoading}
                     onChange={(e) => handleChange(e)}
                   />
+                  <section className="flex flex-col items-center">
+                    <div
+                      onClick={() => {
+                        inputFileRef.current?.click();
+                      }}
+                      className=" flex items-center gap-1 w-fit hover:cursor-pointer p-2 rounded-md bg-rose-500"
+                    >
+                      <span>Browse Audio</span>
+                      <MdAudiotrack size={16} />
+                    </div>
+                    <div className="flex items-center mt-4 gap-4">
+                      <label htmlFor="audioInput">{fileName}</label>
+                      <div
+                        className="p-2 rounded-md bg-red-500 hover:cursor-pointer"
+                        onClick={() => {
+                          setSelectedFile(undefined);
+                          setIsFileSelected(false);
+                          setFileName(initialFileName);
+                        }}
+                      >
+                        <BsFillTrashFill size={16} />
+                      </div>
+                    </div>
+                  </section>
                   <Button
                     disabled={!isFileSelected}
                     onClick={(e) => handleUpload(e)}
@@ -123,7 +157,6 @@ function App() {
           </AnimatePresence>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
