@@ -1,9 +1,10 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Header from "./components/Header";
 import backgroundSvg from "./assets/background.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import RecordAudio from "./components/RecordAudio";
 import UploadAudio from "./components/UploadAudio";
+import toast from "react-hot-toast";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -32,14 +33,19 @@ function App() {
       setIsLoading(false);
     } catch (e) {
       console.log(e);
+      let errMess = "An error occured";
+      if ((e as any).name === "AbortError") {
+        errMess = "Operation was aborted";
+      }
+      toast.error(errMess);
       setIsLoading(false);
     }
   };
 
-  const handleTabChange = (tab:typeof Tabs[0]) => {
-      setSelectedTab(tab);
-      if(selectedTab !== tab) controller.abort()
-  }
+  const handleTabChange = (tab: (typeof Tabs)[0]) => {
+    setSelectedTab(tab);
+    if (selectedTab !== tab) controller.abort();
+  };
 
   const AudioProps = {
     sendAudio,
