@@ -82,7 +82,7 @@ const RecordAudio = ({
   const isNotIdle = status === "recording" || status === "paused";
   status === "recording" || status === "paused";
   return (
-    <>
+    <div >
       <p className="text-center text-white  font-semibold tracking-wider text-2xl">
         {status[0].toUpperCase() + status.slice(1)}
       </p>
@@ -110,7 +110,7 @@ const RecordAudio = ({
       <div className="mt-4">
         {status === "stopped" && mediaBlobUrl && (
           <>
-            <audio src={mediaBlobUrl} controls className="rounded-md" />
+            <audio src={mediaBlobUrl} controls className="rounded-md w-full" />
             <form className="flex">
               <Button
                 onClick={(e) => {
@@ -142,7 +142,7 @@ const RecordAudio = ({
           prediction && `Prediction is: ${prediction}`
         )}
       </span>
-    </>
+    </div>
   );
 };
 export default RecordAudio;

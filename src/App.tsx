@@ -106,9 +106,7 @@ function App() {
               transition={{ duration: 0.2 }}
             >
               {selectedTab.label === "Record" ? (
-                <div className="flex flex-col items-center">
-                  <RecordAudio {...RecordAudioProps} />
-                </div>
+                <RecordAudio {...RecordAudioProps} />
               ) : (
                 <form className="text-white grid place-items-center">
                   <input
