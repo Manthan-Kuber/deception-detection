@@ -55,8 +55,9 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
           </div>
           <div className="flex items-center mt-4 gap-4">
             <label htmlFor="audioInput">{fileName}</label>
-            <div
-              className="p-2 rounded-md bg-red-500 hover:cursor-pointer"
+            <button
+              className="p-2 rounded-md bg-red-500 hover:cursor-pointer disabled:bg-gray-500 disabled:cursor-auto grid place-items-center"
+              disabled={isLoading || !isFileSelected}
               onClick={() => {
                 setSelectedFile(undefined);
                 setIsFileSelected(false);
@@ -64,7 +65,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
               }}
             >
               <BsFillTrashFill size={16} />
-            </div>
+            </button>
           </div>
         </section>
         <Button
