@@ -144,7 +144,7 @@ function App() {
                     </div>
                   </section>
                   <Button
-                    disabled={!isFileSelected}
+                    disabled={!isFileSelected || isLoading}
                     onClick={(e) => handleUpload(e)}
                   >
                     Upload

@@ -3,9 +3,9 @@ import { RiRecordCircleFill, RiRestartFill } from "react-icons/ri";
 import { BsPauseCircle, BsStopCircleFill } from "react-icons/bs";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
-import { ColorRing } from "react-loader-spinner";
 import IconWrapper from "./IconWrapper";
 import Button from "./Button";
+import ShowPrediction from "./ShowPrediction";
 
 const baseClass =
   "text-rose-500 hover:cursor-pointer hover:scale-110 transition-all ease-in-out hover:opacity-90 ";
@@ -82,7 +82,7 @@ const RecordAudio = ({
   const isNotIdle = status === "recording" || status === "paused";
   status === "recording" || status === "paused";
   return (
-    <div >
+    <div>
       <p className="text-center text-white  font-semibold tracking-wider text-2xl">
         {status[0].toUpperCase() + status.slice(1)}
       </p>
@@ -125,23 +125,7 @@ const RecordAudio = ({
           </>
         )}
       </div>
-      <span className="text-white font-mono mt-4 block text-center font-semibold">
-        {isLoading ? (
-          <div className="flex items-center justify-center">
-            <ColorRing
-              visible={true}
-              height="36"
-              width="36"
-              ariaLabel="blocks-loading"
-              wrapperClass="blocks-wrapper"
-              colors={["#67e8f9", "#67e8f9", "#f43f5e", "#f43f5e", "#f43f5e"]}
-            />
-            <span>Loading prediction...</span>
-          </div>
-        ) : (
-          prediction && `Prediction is: ${prediction}`
-        )}
-      </span>
+      <ShowPrediction isLoading={isLoading} prediction={prediction} />
     </div>
   );
 };
