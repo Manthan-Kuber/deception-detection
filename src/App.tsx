@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import RecordAudio from "./components/RecordAudio";
 import UploadAudio from "./components/UploadAudio";
 import toast from "react-hot-toast";
+import Footer from "./components/Footer";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -96,6 +97,7 @@ function App() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

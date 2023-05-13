@@ -1,12 +1,18 @@
-import FooterWave from "./FooterWave";
+import { AiFillGithub } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-slate-800">
-      <FooterWave className="w-full h-32" />
-      <h3 className="absolute sm:text-lg text-neutral-200 font-semibold text-center inset-x-0 bottom-2  ">
-        Made by group #5
-      </h3>
+    <footer className="backdrop-filter backdrop-blur-sm bg-black/40 border-t p-4 flex items-center justify-between text-white tracking-wider font-semibold">
+      <h3 className=" sm:text-lg  text-center text-white ">Group #5</h3>
+      <a
+        href="https://github.com/Manthan-Kuber/deception-detection"
+        referrerPolicy="no-referrer"
+        target="_blank"
+        className="flex items-center gap-2 "
+      >
+        <span>Github </span>
+        <AiFillGithub size={16} />
+      </a>
     </footer>
   );
 };
