@@ -51,6 +51,8 @@ function App() {
     prediction,
   };
 
+  const TabContent = selectedTab.label === "Record" ? RecordAudio : UploadAudio;
+  
   return (
     <div
       className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway bg-no-repeat bg-cover"
@@ -84,15 +86,9 @@ function App() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {selectedTab.label === "Record" ? (
-                <AnimatePresence mode="wait">
-                  <RecordAudio {...AudioProps} />
-                </AnimatePresence>
-              ) : (
-                <AnimatePresence mode="wait">
-                  <UploadAudio {...AudioProps} />
-                </AnimatePresence>
-              )}
+              <AnimatePresence mode="wait">
+                {<TabContent {...AudioProps} />}
+              </AnimatePresence>
             </motion.div>
           </div>
         </div>
