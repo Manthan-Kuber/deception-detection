@@ -42,17 +42,21 @@ function App() {
 
   const handleTabChange = (tab: (typeof Tabs)[0]) => {
     setSelectedTab(tab);
-    if (selectedTab !== tab) controller.abort();
+    if (selectedTab !== tab) {
+      controller.abort();
+      setPrediction("");
+    }
   };
 
   const AudioProps = {
     sendAudio,
-    controller,
+    setPrediction,
     prediction,
+    controller,
   };
 
   const TabContent = selectedTab.label === "Record" ? RecordAudio : UploadAudio;
-  
+
   return (
     <div
       className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-slate-800 font-raleway bg-no-repeat bg-cover"

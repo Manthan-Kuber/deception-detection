@@ -16,7 +16,12 @@ const CentralIconProps = {
   size: 64,
 };
 
-const RecordAudio = ({ sendAudio, controller, prediction }: AudioProps) => {
+const RecordAudio = ({
+  sendAudio,
+  controller,
+  prediction,
+  setPrediction,
+}: AudioProps) => {
   const {
     status,
     startRecording,
@@ -35,6 +40,7 @@ const RecordAudio = ({ sendAudio, controller, prediction }: AudioProps) => {
   const resetRecording = () => {
     controller.abort(); //Abort the initiated fetch request
     clearBlobUrl();
+    setPrediction("");
     setIsLoading(false);
   };
 

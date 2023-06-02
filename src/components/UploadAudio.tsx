@@ -6,7 +6,12 @@ import ShowPrediction from "./ShowPrediction";
 
 const initialFileName = "No file Selected...";
 
-const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
+const UploadAudio = ({
+  controller,
+  sendAudio,
+  prediction,
+  setPrediction,
+}: AudioProps) => {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -50,8 +55,9 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
             onClick={() => {
               inputFileRef.current?.click();
             }}
+            disabled={isLoading || isFileSelected}
             type="button"
-            className=" flex items-center gap-1 w-fit hover:cursor-pointer p-2 rounded-md bg-rose-500"
+            className=" flex items-center gap-1 w-fit hover:cursor-pointer p-2 rounded-md bg-rose-500 disabled:bg-gray-500 disabled:cursor-auto"
           >
             <span>Browse Audio</span>
             <MdAudiotrack size={16} />
@@ -64,6 +70,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
               onClick={() => {
                 setSelectedFile(undefined);
                 setIsFileSelected(false);
+                setPrediction("");
                 setFileName(initialFileName);
               }}
               type="button"
