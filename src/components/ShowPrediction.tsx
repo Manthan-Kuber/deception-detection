@@ -38,7 +38,7 @@ const ShowPrediction = ({ isLoading, prediction }: Props) => {
               {predString}
             </span>
             <br />
-            Truth Probability is:{" "}
+            Truth Probability :{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-cyan-300">
               {prediction} %{" "}
             </span>

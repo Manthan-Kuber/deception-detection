@@ -27,7 +27,7 @@ function App() {
       const res = await fetch(serverUrl, options);
       const { prediction }: { prediction: number } = await res.json();
       console.log(prediction);
-      setPrediction(prediction.toFixed(3).toString());
+      setPrediction(prediction.toFixed(2).toString());
       setIsLoading(false);
     } catch (e) {
       console.log(e);
