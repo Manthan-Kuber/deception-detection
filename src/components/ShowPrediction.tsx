@@ -10,7 +10,7 @@ const getPredictionString = (predNumber: number) => {
   if (predNumber > 80) predString = "Mostly Truth";
   if (predNumber > 60 && predNumber < 80) predString = "Probably Truth";
   if (predNumber > 40 && predNumber < 60)
-    predString = "Probably Lie / Maybe True";
+    predString = "Probably Lie / Maybe Truth";
   if (predNumber < 40) predString = "Mostly Lie";
   return predString;
 };
