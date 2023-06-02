@@ -25,7 +25,10 @@ const RecordAudio = ({ sendAudio, controller, prediction }: AudioProps) => {
     resumeRecording,
     clearBlobUrl,
     mediaBlobUrl,
-  } = useReactMediaRecorder({ audio: true });
+  } = useReactMediaRecorder({
+    audio: true,
+    mediaRecorderOptions: { mimeType: "audio/wav" },
+  });
 
   const [isLoading, setIsLoading] = useState(false);
 
