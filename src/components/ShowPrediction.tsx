@@ -7,11 +7,11 @@ interface Props {
 
 const getPredictionString = (predNumber: number) => {
   let predString = "";
-  if (predNumber > 80) predString = "Mostly Truth";
-  if (predNumber > 60 && predNumber < 80) predString = "Probably Truth";
+  if (predNumber > 80) predString = "Mostly True";
+  if (predNumber > 60 && predNumber < 80) predString = "Probably True";
   if (predNumber > 40 && predNumber < 60)
-    predString = "Probably Lie / Maybe Truth";
-  if (predNumber < 40) predString = "Mostly Lie";
+    predString = "Probably Lying";
+  if (predNumber < 40) predString = "Mostly Lying";
   return predString;
 };
 
