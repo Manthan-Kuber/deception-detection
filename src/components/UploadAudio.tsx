@@ -31,6 +31,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
     };
     sendAudio(options, setIsLoading);
   };
+
   return (
     <>
       <form className="text-white grid place-items-center">
@@ -44,7 +45,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
           disabled={isLoading}
           onChange={(e) => handleChange(e)}
         />
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col items-center space-y-4">
           <button
             onClick={() => {
               inputFileRef.current?.click();
@@ -55,7 +56,7 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
             <span>Browse Audio</span>
             <MdAudiotrack size={16} />
           </button>
-          <div className="flex items-center mt-4 gap-4">
+          <div className="flex items-center gap-4">
             <label htmlFor="audioInput">{fileName}</label>
             <button
               className="p-2 rounded-md bg-red-500 hover:cursor-pointer disabled:bg-gray-500 disabled:cursor-auto grid place-items-center"
@@ -70,6 +71,13 @@ const UploadAudio = ({ controller, sendAudio, prediction }: AudioProps) => {
               <BsFillTrashFill size={16} />
             </button>
           </div>
+          {selectedFile && (
+            <audio
+              src={URL.createObjectURL(selectedFile)}
+              controls
+              className="rounded-md w-full"
+            />
+          )}
         </section>
         <Button
           disabled={!isFileSelected || isLoading}
